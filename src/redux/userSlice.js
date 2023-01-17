@@ -3,20 +3,27 @@ import {createSlice} from '@reduxjs/toolkit'
 export const userSlice = createSlice({
     name: "user",
     initialState: {
-        name: "Sourov",
-        email: "sourov@gmail.com",
+        userInfo: {
+            name: "Sourov",
+            email: "sourov@gmail.com",
+        },
+        pending: null,
+        error: false,
     },
     reducers: {
-        update: (state, action) => {
-            state.name = action.payload.name;
-            state.email = action.payload.email;
+        updateStart: (state) => {
+            state.pending = true;
         },
-        remove: () => ({}),
-        addHello: (state, action) => {
-          state.name = ` hi ${action.payload.name}`
+        updateSuccess: (state, action) => {
+            state.pending = false;
+            state.userInfo = action.payload
         },
+        updateError: (state) => {
+            state.pending = false;
+            state.error = true
+        }
     },
 })
 
-export const {update, remove, addHello} = userSlice.actions
+export const {updateStart, updateSuccess, updateError} = userSlice.actions
 export default userSlice.reducer
